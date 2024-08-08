@@ -31,6 +31,9 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+# POSTGRESQL
+export PATH=$PATH:/opt/homebrew/opt/postgresql@14/bin
+
 # bun completions
 [ -s "/Users/subhan/.bun/_bun" ] && source "/Users/subhan/.bun/_bun"
 
@@ -47,13 +50,14 @@ export EDITOR=/opt/homebrew/bin/nvim
 
 # Eza
 alias l="eza --icons --git -a"
-alias lt="eza --tree --level=2 --icons --git"
+alias ld="eza --tree --level=2 --icons --git"
 
 # fzf
 source <(fzf --zsh)
 
 # Others
 alias cl="clear"
+alias cd="z"
 
 # Bind key to open a new session
 function sesh-sessions() {
