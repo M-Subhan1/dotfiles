@@ -6,20 +6,8 @@ return {
 	enable_tab_bar = false,
 	font_size = 16.5,
 	font = wezterm.font("MesloLGS Nerd Font Mono", { weight = "Regular", stretch = "Normal", style = "Normal" }),
-	-- macos_window_background_blur = 30,
-	-- window_background_opacity = 0.55,
-	background = {
-		{
-			source = {
-				File = "/Users/subhan/.config/wezterm/bg.jpg",
-			},
-			hsb = {
-				brightness = 0.15,
-				hue = 1.0,
-				saturation = 0.75,
-			},
-		},
-	},
+	macos_window_background_blur = 30,
+	window_background_opacity = 0.80,
 	window_decorations = "RESIZE",
 	keys = {
 		{
