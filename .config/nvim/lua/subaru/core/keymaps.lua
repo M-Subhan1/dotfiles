@@ -15,7 +15,7 @@ keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 keymap.set("n", "<C-a>", "gg<S-v>G")
 
 -- Save file and quit
-keymap.set("n", "<Leader>W`", ":update<Return>", appendDescription(opts, "Save file and quit"))
+keymap.set("n", "<Leader>W", ":update<Return>", appendDescription(opts, "Save file and quit"))
 keymap.set("n", "<Leader>q", ":quit<Return>", appendDescription(opts, "Quit"))
 keymap.set("n", "<Leader>Q", ":qa<Return>", appendDescription(opts, "Quit all"))
 
