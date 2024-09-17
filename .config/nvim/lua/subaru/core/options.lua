@@ -1,5 +1,7 @@
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 vim.cmd("let g:netrw_liststyle = 3")
-vim.cmd("highlight VertSplit cterm=NONE ctermfg=NONE ctermbg=NONE guifg=#888888 guibg=NONE")
 vim.cmd("set laststatus=3")
 
 local opt = vim.opt

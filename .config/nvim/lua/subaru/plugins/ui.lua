@@ -53,8 +53,18 @@ return {
 	},
 	{
 		"rcarriga/nvim-notify",
+		keys = {
+			{
+				"n",
+				"<leader>n",
+				function()
+					require("notify").dismiss({ silent = true, pending = true })
+				end,
+				desc = "Dismiss notification",
+			},
+		},
 		opts = {
-			timeout = 5000,
+			timeout = 3000,
 			background_colour = "#000000",
 			render = "wrapped-compact",
 		},

@@ -1,21 +1,21 @@
 return {
 	"nvim-tree/nvim-tree.lua",
 	dependencies = "nvim-tree/nvim-web-devicons",
+	cmd = { "NvimTreeToggle", "NvimTreeFocus" },
 	config = function()
 		local nvimtree = require("nvim-tree")
-
-		-- recommended settings from nvim-tree documentation
-
-		vim.g.loaded_netrw = 1
-		vim.g.loaded_netrwPlugin = 1
+		vim.cmd.highlight("link NvimTreeWinSeparator NvimTreeNormal")
 
 		nvimtree.setup({
+			disable_netrw = true,
 			view = {
 				width = 30,
 				relativenumber = true,
+				preserve_window_proportions = false,
 			},
 			-- change folder arrow icons
 			renderer = {
+				root_folder_label = false,
 				indent_markers = {
 					enable = true,
 				},

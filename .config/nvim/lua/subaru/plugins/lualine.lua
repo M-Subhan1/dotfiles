@@ -49,23 +49,37 @@ return {
 			},
 		}
 
-		-- configure lualine with modified theme
-		lualine.setup({
+		local config = {
 			options = {
 				theme = my_lualine_theme,
 			},
 			sections = {
+				lualine_c = {
+					{ "filename", path = 4 },
+				},
 				lualine_x = {
 					{
 						lazy_status.updates,
 						cond = lazy_status.has_updates,
 						color = { fg = "#ff9e64" },
 					},
-					{ "encoding" },
 					{ "fileformat" },
 					{ "filetype" },
 				},
 			},
-		})
+		}
+
+		if not vim.g.trouble_lualine then
+			table.insert(config.sections.lualine_c, {
+				function()
+					return require("nvim-navic").get_location()
+				end,
+				cond = function()
+					return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
+				end,
+			})
+		end
+		-- configure lualine with modified theme
+		lualine.setup(config)
 	end,
 }
