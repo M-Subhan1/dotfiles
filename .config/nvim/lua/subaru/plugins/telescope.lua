@@ -125,6 +125,12 @@ return {
 						height = 0.80,
 						prompt_position = "top",
 					},
+					keys = {
+						{
+							"<C-d>",
+							require("telescope.actions").delete_buffer,
+						},
+					},
 				})
 			end,
 			desc = "Search symbols in current buffer",
