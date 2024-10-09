@@ -86,6 +86,20 @@ return {
 					capabilities = capabilities,
 				})
 			end,
+			["eslint"] = function()
+				lspconfig["eslint"].setup({
+					capabilities = capabilities,
+					on_attach = function(_client, bufnr)
+						vim.api.nvim_create_autocmd("BufWritePre", {
+							buffer = bufnr,
+							command = "EslintFixAll",
+						})
+					end,
+					completion = {
+						callSnippet = "Replace",
+					},
+				})
+			end,
 			["svelte"] = function()
 				-- configure svelte server
 				lspconfig["svelte"].setup({
@@ -111,6 +125,8 @@ return {
 						"javascriptreact",
 						"css",
 						"svelte",
+						"astro",
+						"vue",
 					},
 				})
 			end,
