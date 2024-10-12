@@ -135,5 +135,11 @@ return {
 			end,
 			desc = "Search symbols in current buffer",
 		},
+		{
+			"<leader>fC",
+			function()
+				require("telescope.builtin").resume()
+			end,
+		},
 	},
 }
