@@ -34,7 +34,7 @@
             pkgs.supabase-cli
             pkgs.stripe-cli
             pkgs.nodejs_20
-            pkgs.sqlite
+            pkgs.wget
           ];
 
         # Adding homebrew casks
@@ -44,6 +44,7 @@
           brews = [
             "tpm"
             "stow"
+            "sqlite"
           ];
 
           casks = [
