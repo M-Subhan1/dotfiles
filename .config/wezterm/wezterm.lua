@@ -5,7 +5,7 @@ return {
 	color_scheme = "Catppuccin Mocha",
 	enable_tab_bar = false,
 	font_size = 16.5,
-	font = wezterm.font("MesloLGS Nerd Font Mono", { weight = "Regular", stretch = "Normal", style = "Normal" }),
+	font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular", stretch = "Normal", style = "Normal" }),
 	macos_window_background_blur = 30,
 	window_background_opacity = 0.80,
 	window_decorations = "RESIZE",
