@@ -33,8 +33,8 @@
             pkgs.yarn
             pkgs.supabase-cli
             pkgs.stripe-cli
-            pkgs.mkalias
             pkgs.nodejs_20
+            pkgs.sqlite
           ];
 
         # Adding homebrew casks
