@@ -1,14 +1,4 @@
 eval "$(/opt/homebrew/bin/brew shellenv)"
-# pnpm
-export PNPM_HOME="/Users/subhan/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
-# POSTGRESQL
-export PATH=$PATH:/opt/homebrew/opt/postgresql@14/bin
 
 # bun completions
 [ -s "/Users/subhan/.bun/_bun" ] && source "/Users/subhan/.bun/_bun"
@@ -16,6 +6,10 @@ export PATH=$PATH:/opt/homebrew/opt/postgresql@14/bin
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # starship
 eval "$(starship init zsh)"
@@ -67,3 +61,13 @@ autoload -Uz _zi
 (( ${+_comps} )) && _comps[zi]=_zi
 # examples here -> https://wiki.zshell.dev/ecosystem/category/-annexes
 zicompinit # <- https://wiki.zshell.dev/docs/guides/commands
+
+
+
+# pnpm
+export PNPM_HOME="/Users/subhan/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
