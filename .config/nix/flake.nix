@@ -29,22 +29,26 @@
             pkgs.fzf
             pkgs.lazygit
             pkgs.ranger
-            pkgs.pnpm
-            pkgs.yarn
             pkgs.supabase-cli
             pkgs.stripe-cli
-            pkgs.nodejs_20
             pkgs.wget
+            pkgs.bun
           ];
 
         # Adding homebrew casks
         homebrew = {
           enable = true;
 
+          taps = [
+            "nikitabobko/tap"
+          ];
+
           brews = [
             "tpm"
             "stow"
             "sqlite"
+            "nvm"
+            "pnpm"
           ];
 
           casks = [
@@ -64,7 +68,7 @@
             "stats"
             "aldente"
             "git-credential-manager"
-            "nikitabobko/tap/aerospace"
+            "aerospace"
           ];
 
           onActivation.autoUpdate = true;
