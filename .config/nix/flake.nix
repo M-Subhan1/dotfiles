@@ -33,6 +33,7 @@
             pkgs.stripe-cli
             pkgs.wget
             pkgs.bun
+            pkgs.valkey
           ];
 
         # Adding homebrew casks
@@ -49,6 +50,7 @@
             "sqlite"
             "nvm"
             "pnpm"
+            "gh"
           ];
 
           casks = [
