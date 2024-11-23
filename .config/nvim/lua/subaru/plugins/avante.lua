@@ -4,9 +4,9 @@ return {
 	lazy = false,
 	version = false, -- set this if you want to always pull the latest change
 	opts = {
-		provider = "copilot",
+		provider = "claude", -- Recommend using Claude
+		auto_suggestions_provider = "copilot", -- High frequency operation, so use a cheaper provider
 		behavior = {
-			auto_suggestions = true,
 			auto_apply_diff_after_generation = true,
 			support_paste_from_clipboard = true,
 		},
