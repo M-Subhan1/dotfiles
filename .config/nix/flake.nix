@@ -86,7 +86,25 @@
         ];
 
         system.defaults = {
-          dock.autohide = true;
+          # Set the default theme to dark.
+          NSGlobalDomain.AppleInterfaceStyle = "Dark";
+
+          dock = {
+            autohide = true;
+            show-recents = false;
+            persistent-apps = [
+              "/Applications/Notes.app"
+              "/Applications/WezTerm.app/"
+              "/Applications/Zen Browser.app/"
+              "/Applications/Linear.app/"
+              "/Applications/Slack.app/"
+              "/Applications/Arc.app/"
+              "/Applications/Cursor.app/"
+            ];
+          };
+
+          finder.FXRemoveOldTrashItems = true;
+          system.keyboard.remapCapsLockToEscape = true;
         };
 
         # Auto upgrade nix package and the daemon service.
