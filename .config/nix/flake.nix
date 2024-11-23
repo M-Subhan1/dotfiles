@@ -51,6 +51,8 @@
             "nvm"
             "pnpm"
             "gh"
+            "docker-compose"
+            "thefuck"
           ];
 
           casks = [
@@ -71,10 +73,11 @@
             "aldente"
             "git-credential-manager"
             "aerospace"
+            "google-chrome"
+            "docker"
           ];
 
           onActivation.autoUpdate = true;
-          onActivation.cleanup = "zap";
         };
 
         # Adding fonts to the environment
