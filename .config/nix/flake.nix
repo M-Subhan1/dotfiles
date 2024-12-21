@@ -34,6 +34,7 @@
             pkgs.wget
             pkgs.bun
             pkgs.valkey
+            pkgs.graphicsmagick
           ];
 
         # Adding homebrew casks
@@ -51,8 +52,8 @@
             "nvm"
             "pnpm"
             "gh"
-            "docker-compose"
             "thefuck"
+            "docker-compose"
           ];
 
           casks = [
@@ -85,6 +86,15 @@
           (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
         ];
 
+
+
+        # Configure keyboard
+        system.keyboard =
+          {
+            enableKeyMapping = true;
+            remapCapsLockToEscape = true;
+          };
+
         system.defaults = {
           # Set the default theme to dark.
           NSGlobalDomain.AppleInterfaceStyle = "Dark";
@@ -93,7 +103,7 @@
             autohide = true;
             show-recents = false;
             persistent-apps = [
-              "/Applications/Notes.app"
+              "/Applications/Notion Calendar.app/"
               "/Applications/WezTerm.app/"
               "/Applications/Zen Browser.app/"
               "/Applications/Linear.app/"
@@ -102,9 +112,6 @@
               "/Applications/Cursor.app/"
             ];
           };
-
-          finder.FXRemoveOldTrashItems = true;
-          system.keyboard.remapCapsLockToEscape = true;
         };
 
         # Auto upgrade nix package and the daemon service.
