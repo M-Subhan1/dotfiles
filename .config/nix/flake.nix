@@ -52,7 +52,6 @@
             "nvm"
             "pnpm"
             "gh"
-            "thefuck"
             "docker-compose"
           ];
 
