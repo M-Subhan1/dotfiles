@@ -1,3 +1,4 @@
 .config/raycast/
 .config/gh/
 .config/github-copilot/
+.DS_Store
