@@ -35,6 +35,8 @@
             pkgs.bun
             pkgs.valkey
             pkgs.graphicsmagick
+            pkgs.direnv
+            pkgs.karabiner-elements
           ];
 
         # Adding homebrew casks
@@ -74,6 +76,8 @@
             "git-credential-manager"
             "google-chrome"
             "docker"
+            "notion"
+            "ghostty"
           ];
 
           onActivation.autoUpdate = true;
