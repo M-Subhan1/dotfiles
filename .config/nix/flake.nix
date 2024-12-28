@@ -72,7 +72,6 @@
             "stats"
             "aldente"
             "git-credential-manager"
-            "aerospace"
             "google-chrome"
             "docker"
           ];
