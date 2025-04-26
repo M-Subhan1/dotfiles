@@ -6,6 +6,7 @@
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+
   };
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }:
@@ -18,7 +19,6 @@
         # $ nix-env -qaP | grep wget
         environment.systemPackages =
           [
-            pkgs.neovim
             pkgs.tmux
             pkgs.sesh
             pkgs.starship
@@ -29,8 +29,6 @@
             pkgs.fzf
             pkgs.lazygit
             pkgs.ranger
-            pkgs.supabase-cli
-            pkgs.stripe-cli
             pkgs.wget
             pkgs.bun
             pkgs.valkey
@@ -42,12 +40,13 @@
         # Adding homebrew casks
         homebrew = {
           enable = true;
-
           taps = [
             "nikitabobko/tap"
+            "supabase/tap"
           ];
 
           brews = [
+            "neovim"
             "tpm"
             "stow"
             "sqlite"
@@ -55,19 +54,18 @@
             "pnpm"
             "gh"
             "docker-compose"
+            "supabase"
+            "stripe-cli"
           ];
 
           casks = [
             "wezterm@nightly"
-            "arc"
             "zen-browser"
             "zoom"
             "spotify"
             "slack"
             "whatsapp"
             "raycast"
-            "docker"
-            "cloudflare-warp"
             "linear-linear"
             "iina"
             "the-unarchiver"
@@ -75,9 +73,10 @@
             "aldente"
             "git-credential-manager"
             "google-chrome"
-            "docker"
             "notion"
             "ghostty"
+            "orbstack"
+            "cursor"
           ];
 
           onActivation.autoUpdate = true;
@@ -85,17 +84,9 @@
 
         # Adding fonts to the environment
         fonts.packages = with pkgs; [
-          (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+          pkgs.nerd-fonts.jetbrains-mono
         ];
 
-
-
-        # Configure keyboard
-        system.keyboard =
-          {
-            enableKeyMapping = true;
-            remapCapsLockToEscape = true;
-          };
 
         system.defaults = {
           # Set the default theme to dark.
@@ -110,15 +101,10 @@
               "/Applications/Zen Browser.app/"
               "/Applications/Linear.app/"
               "/Applications/Slack.app/"
-              "/Applications/Arc.app/"
               "/Applications/Cursor.app/"
             ];
           };
         };
-
-        # Auto upgrade nix package and the daemon service.
-        services.nix-daemon.enable = true;
-        # nix.package = pkgs.nix;
 
         # Necessary for using flakes on this system.
         nix.settings.experimental-features = "nix-command flakes";

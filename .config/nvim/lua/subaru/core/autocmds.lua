@@ -2,14 +2,11 @@ local function augroup(name)
 	return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
 end
 
--- Check if we need to reload the file when it changed
-vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-	group = augroup("checktime"),
-	callback = function()
-		if vim.o.buftype ~= "nofile" then
-			vim.cmd("checktime")
-		end
-	end,
+-- Enable autoread and set up checking triggers
+vim.o.autoread = true
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
+	command = "if mode() != 'c' | checktime | endif",
+	pattern = "*",
 })
 
 -- Highlight on yank

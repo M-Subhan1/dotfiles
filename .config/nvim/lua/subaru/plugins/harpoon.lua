@@ -1,5 +1,6 @@
 return {
 	"ThePrimeagen/harpoon",
+	event = { "BufReadPre", "BufNewFile" },
 	branch = "harpoon2",
 	opts = {
 		menu = {

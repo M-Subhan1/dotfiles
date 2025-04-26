@@ -23,9 +23,10 @@ return {
 				go = { "gofmt" },
 			},
 			format_on_save = {
-				lsp_fallback = true,
-				async = false,
-				timeout_ms = 1000,
+				async = false, -- not recommended to change
+				quiet = false, -- not recommended to change
+				lsp_format = "fallback", -- not recommended to change
+				timeout_ms = 3000,
 			},
 		})
 

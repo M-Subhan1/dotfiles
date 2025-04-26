@@ -2,23 +2,38 @@ return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
-		"hrsh7th/cmp-nvim-lsp",
+		"saghen/blink.cmp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
-		{ "folke/neodev.nvim", opts = {} },
 		"SmiteshP/nvim-navic",
+		{
+			"folke/lazydev.nvim",
+			ft = "lua", -- only load on lua files
+			opts = {
+				library = {
+					-- See the configuration section for more details
+					-- Load luvit types when the `vim.uv` word is found
+					{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+				},
+			},
+		},
 	},
-	config = function()
-		-- import lspconfig plugin
+	opts = { servers = { lua_ls = {}, svelte = {}, tsls = {}, emmet_ls = {} } },
+	config = function(_, opts)
 		local lspconfig = require("lspconfig")
+		for server, config in pairs(opts.servers) do
+			config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+			lspconfig[server].setup(config)
+		end
 
-		-- import mason_lspconfig plugin
-		local mason_lspconfig = require("mason-lspconfig")
+		-- Change the Diagnostic symbols in the sign column (gutter)
+		-- (not in youtube nvim video)
+		local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+		for type, icon in pairs(signs) do
+			local hl = "DiagnosticSign" .. type
+			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+		end
 
-		-- import cmp-nvim-lsp plugin
-		local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
-		local keymap = vim.keymap -- for conciseness
-
+		local keymap = vim.keymap
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 			callback = function(ev)
@@ -65,87 +80,6 @@ return {
 
 				opts.desc = "Restart LSP"
 				keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
-			end,
-		})
-
-		-- used to enable autocompletion (assign to every lsp server config)
-		local capabilities = cmp_nvim_lsp.default_capabilities()
-
-		-- Change the Diagnostic symbols in the sign column (gutter)
-		-- (not in youtube nvim video)
-		local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-		for type, icon in pairs(signs) do
-			local hl = "DiagnosticSign" .. type
-			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-		end
-
-		mason_lspconfig.setup_handlers({
-			-- default handler for installed servers
-			function(server_name)
-				lspconfig[server_name].setup({
-					capabilities = capabilities,
-				})
-			end,
-			["eslint"] = function()
-				lspconfig["eslint"].setup({
-					capabilities = capabilities,
-					on_attach = function(_client, bufnr)
-						vim.api.nvim_create_autocmd("BufWritePre", {
-							buffer = bufnr,
-							command = "EslintFixAll",
-						})
-					end,
-					completion = {
-						callSnippet = "Replace",
-					},
-				})
-			end,
-			["svelte"] = function()
-				-- configure svelte server
-				lspconfig["svelte"].setup({
-					capabilities = capabilities,
-					on_attach = function(client, bufnr)
-						vim.api.nvim_create_autocmd("BufWritePost", {
-							pattern = { "*.js", "*.ts" },
-							callback = function(ctx)
-								-- Here use ctx.match instead of ctx.file
-								client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
-							end,
-						})
-					end,
-				})
-			end,
-			["emmet_ls"] = function()
-				-- configure emmet language server
-				lspconfig["emmet_ls"].setup({
-					capabilities = capabilities,
-					filetypes = {
-						"html",
-						"typescriptreact",
-						"javascriptreact",
-						"css",
-						"svelte",
-						"astro",
-						"vue",
-					},
-				})
-			end,
-			["lua_ls"] = function()
-				-- configure lua server (with special settings)
-				lspconfig["lua_ls"].setup({
-					capabilities = capabilities,
-					settings = {
-						Lua = {
-							-- make the language server recognize "vim" global
-							diagnostics = {
-								globals = { "vim" },
-							},
-							completion = {
-								callSnippet = "Replace",
-							},
-						},
-					},
-				})
 			end,
 		})
 	end,

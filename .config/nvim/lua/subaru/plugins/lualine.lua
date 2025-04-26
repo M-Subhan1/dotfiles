@@ -2,6 +2,7 @@ return {
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
+		event = "VeryLazy",
 		config = function()
 			local lualine = require("lualine")
 			local lazy_status = require("lazy.status") -- to configure lazy pending updates count
@@ -50,6 +51,10 @@ return {
 				},
 			}
 
+			local opts = {
+				show_job_count = true,
+			}
+
 			local config = {
 				options = {
 					theme = my_lualine_theme,
@@ -66,6 +71,20 @@ return {
 						},
 						{ "fileformat" },
 						{ "filetype" },
+					},
+					lualine_y = {
+						{
+							function()
+								return require("vectorcode.integrations").lualine(opts)[1]()
+							end,
+							cond = function()
+								if package.loaded["vectorcode"] == nil then
+									return false
+								else
+									return require("vectorcode.integrations").lualine(opts).cond()
+								end
+							end,
+						},
 					},
 				},
 			}
