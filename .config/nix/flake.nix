@@ -77,6 +77,7 @@
             "ghostty"
             "orbstack"
             "cursor"
+            "obsidian"
           ];
 
           onActivation.autoUpdate = true;
