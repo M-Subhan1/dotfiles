@@ -17,7 +17,19 @@ return {
 			},
 		},
 	},
-	opts = { servers = { lua_ls = {}, svelte = {}, tsls = {}, emmet_ls = {} } },
+	opts = {
+		servers = {
+			lua_ls = {},
+			ts_ls = {},
+			emmet_ls = {},
+			tailwindcss = {},
+			svelte = {},
+			eslint_d = {},
+			cssls = {},
+			yamlls = {},
+			mdx_analyzer = {},
+		},
+	},
 	config = function(_, opts)
 		local lspconfig = require("lspconfig")
 		for server, config in pairs(opts.servers) do
