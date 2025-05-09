@@ -157,72 +157,15 @@ return {
 		}
 	end,
 	init = function()
-		local notify = require("notify")
-
-		local M = {}
-
-		function M:init()
-			local group = vim.api.nvim_create_augroup("CodeCompanionFidgetHooks", {})
-
-			vim.api.nvim_create_autocmd({ "User" }, {
-				pattern = "CodeCompanionRequestStarted",
-				group = group,
-				callback = function(request)
-					local title = "CodeCompanion: " .. request.data.strategy
-					local notification = notify(
-						"Requesting assistance...",
-						vim.log.levels.INFO,
-						{ title = title, keep = true, icon = "" }
-					)
-					M:store_progress_handle(request.data.id, notification)
-				end,
-			})
-
-			vim.api.nvim_create_autocmd({ "User" }, {
-				pattern = "CodeCompanionRequestFinished",
-				group = group,
-				callback = function(request)
-					local notification = M:pop_progress_handle(request.data.id)
-					if notification then
-						local final_message = "Unhandled Status"
-						local level = vim.log.levels.WARN
-						if request.data.status == "success" then
-							final_message = "Completed"
-							level = vim.log.levels.INFO
-						elseif request.data.status == "error" then
-							final_message = "Error"
-							level = vim.log.levels.ERROR
-						elseif request.data.status == "cancelled" then
-							final_message = "Cancelled"
-							level = vim.log.levels.WARN
-						end
-						notification:update({
-							message = final_message,
-							level = level,
-							keep = false,
-							timeout = 3000,
-						})
-					end
-				end,
-			})
-		end
-
-		M.handles = {}
-
-		function M:store_progress_handle(id, handle)
-			M.handles[id] = handle
-		end
-
-		function M:pop_progress_handle(id)
-			local handle = M.handles[id]
-			M.handles[id] = nil
-			return handle
-		end
-
-		M:init()
-
 		-- Keybindings
-		vim.keymap.set("n", "<leader>aa", "<cmd>CodeCompanionAction<CR>", { desc = " CodeCompanion: Action Palette" })
+		vim.keymap.set("n", "<leader>aa", "<cmd>CodeCompanionChat Toggle<CR>", { desc = " CodeCompanion: Toggle Chat" })
+		vim.keymap.set(
+			"v",
+			"<leader>aa",
+			"<cmd>CodeCompanionChat Add<CR>",
+			{ desc = " CodeCompanion: Add Select to Chat" }
+		)
+		vim.keymap.set("n", "<leader>an", "<cmd>CodeCompanionChat<CR>", { desc = " CodeCompanion: New Chat" })
 		vim.keymap.set("n", "<leader>ac", "<cmd>CodeCompanionChat<CR>", { desc = " CodeCompanion: Chat" })
 		vim.keymap.set("n", "<leader>aq", "<cmd>CodeCompanion<CR>", { desc = " CodeCompanion: Quick Action" })
 
