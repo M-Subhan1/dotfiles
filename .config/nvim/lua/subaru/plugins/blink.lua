@@ -16,6 +16,10 @@ return { -- optional blink completion source for require statements and module a
 
 		return {
 			snippets = { preset = "luasnip" },
+			appearance = {
+				use_nvim_cmp_as_default = false,
+				nerd_font_variant = "mono",
+			},
 			sources = {
 				-- add lazydev to your completion providers
 				default = { "lazydev", "lsp", "path", "snippets", "buffer" },
@@ -100,8 +104,21 @@ return { -- optional blink completion source for require statements and module a
 				["<CR>"] = { "accept", "fallback" },
 			},
 			completion = {
+				accept = {
+					auto_brackets = {
+						enabled = true,
+					},
+				},
+				documentation = {
+					auto_show = true,
+					auto_show_delay_ms = 200,
+				},
+				cmdline = {
+					enabled = false,
+				},
 				menu = {
 					draw = {
+						treesitter = { "lsp" },
 						components = {
 							kind_icon = {
 								text = function(ctx)

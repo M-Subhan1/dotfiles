@@ -37,6 +37,10 @@ return {
 				"emmet_ls",
 				"prismals",
 				"pyright",
+				"gopls",
+				"mdx_analyzer",
+				"yamlls",
+				"prismals",
 			},
 		})
 
@@ -48,7 +52,6 @@ return {
 				"black", -- python formatter
 				"pylint", -- python linter
 				"eslint_d", -- js linter},
-				"mdx_analyzer",
 			},
 		})
 	end,

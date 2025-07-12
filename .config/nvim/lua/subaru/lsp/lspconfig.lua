@@ -28,22 +28,43 @@ return {
 			cssls = {},
 			yamlls = {},
 			mdx_analyzer = {},
+			pyright = {},
+			gopls = {},
 		},
 	},
 	config = function(_, opts)
-		local lspconfig = require("lspconfig")
 		for server, config in pairs(opts.servers) do
 			config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
-			lspconfig[server].setup(config)
+			vim.lsp.config(server, {
+				-- Server-specific settings. See `:help lsp-quickstart`
+				settings = {
+					[server] = config,
+				},
+			})
 		end
 
-		-- Change the Diagnostic symbols in the sign column (gutter)
-		-- (not in youtube nvim video)
-		local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-		for type, icon in pairs(signs) do
-			local hl = "DiagnosticSign" .. type
-			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-		end
+		vim.diagnostic.config({
+			signs = {
+				text = {
+					[vim.diagnostic.severity.ERROR] = " ",
+					[vim.diagnostic.severity.WARN] = " ",
+					[vim.diagnostic.severity.INFO] = "󰋼 ",
+					[vim.diagnostic.severity.HINT] = "󰌵 ",
+				},
+				texthl = {
+					[vim.diagnostic.severity.ERROR] = "Error",
+					[vim.diagnostic.severity.WARN] = "Error",
+					[vim.diagnostic.severity.HINT] = "Hint",
+					[vim.diagnostic.severity.INFO] = "Info",
+				},
+				numhl = {
+					[vim.diagnostic.severity.ERROR] = "",
+					[vim.diagnostic.severity.WARN] = "",
+					[vim.diagnostic.severity.HINT] = "",
+					[vim.diagnostic.severity.INFO] = "",
+				},
+			},
+		})
 
 		local keymap = vim.keymap
 		vim.api.nvim_create_autocmd("LspAttach", {

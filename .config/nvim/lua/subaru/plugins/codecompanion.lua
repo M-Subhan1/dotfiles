@@ -1,178 +1,226 @@
-return {
-	"olimorris/codecompanion.nvim",
-	opts = function()
-		return {
-			display = {
-				chat = {
-					show_references = true, -- Show references (from slash commands and variables) in the chat buffer?
-					start_in_insert_mode = true, -- Open the chat buffer in insert mode?
-					-- Change the default icons
-					icons = {
-						pinned_buffer = " ",
-						watched_buffer = "👀 ",
-					},
+return {}
 
-					-- Alter the sizing of the debug window
-					debug_window = {
-						---@return number|fun(): number
-						width = vim.o.columns - 5,
-						---@return number|fun(): number
-						height = vim.o.lines - 2,
-					},
-
-					-- Options to customize the UI of the chat buffer
-					window = {
-						layout = "vertical", -- float|vertical|horizontal|buffer
-						border = "single",
-						height = 0.8,
-						width = 0.45,
-						relative = "editor",
-						full_height = true, -- when set to false, vsplit will be used to open the chat buffer vs. botright/topleft vsplit
-						opts = {
-							breakindent = true,
-							cursorcolumn = false,
-							cursorline = false,
-							foldcolumn = "0",
-							linebreak = true,
-							list = false,
-							numberwidth = 1,
-							signcolumn = "no",
-							spell = false,
-							wrap = true,
-						},
-					},
-
-					---Customize how tokens are displayed
-					---@param tokens number
-					---@return string
-					token_count = function(tokens)
-						return " (" .. tokens .. " tokens)"
-					end,
-				},
-
-				action_palette = {
-					width = 95,
-					height = 10,
-					provider = "telescope", -- Can be "default", "telescope", or "mini_pick". If not specified, the plugin will autodetect installed providers.
-					opts = {
-						show_default_actions = true, -- Show the default actions in the action palette?
-						show_default_prompt_library = true, -- Show the default prompt library in the action palette?
-					},
-				},
-			},
-
-			strategies = {
-				chat = {
-					adapter = "openrouter_gemini_pro",
-					roles = {
-						user = "subaru",
-						---@type string|fun(adapter: CodeCompanion.Adapter): string
-						llm = function(adapter)
-							return "AI (" .. adapter.formatted_name .. ")"
-						end,
-					},
-
-					tools = {
-						["mcp"] = {
-							callback = require("mcphub.extensions.codecompanion"),
-							description = "Call tools and resources from the MCP Servers",
-							opts = {
-								user_approval = true,
-							},
-						},
-						vectorcode = {
-							description = "Run VectorCode to retrieve the project context.",
-							callback = require("vectorcode.integrations").codecompanion.chat.make_tool({
-								-- your options goes here
-							}),
-						},
-					},
-				},
-
-				inline = {
-					keymaps = {
-						accept_change = {
-							modes = { n = "ga" },
-							description = "Accept the suggested change",
-						},
-						reject_change = {
-							modes = { n = "gr" },
-							description = "Reject the suggested change",
-						},
-					},
-				},
-			},
-			adapters = {
-				openrouter_claude = function()
-					return require("codecompanion.adapters").extend("openai_compatible", {
-						env = {
-							url = "https://openrouter.ai/api",
-							api_key = "OPENROUTER_API_KEY",
-							chat_url = "/v1/chat/completions",
-						},
-						schema = {
-							model = {
-								default = "anthropic/claude-3.7-sonnet",
-							},
-						},
-					})
-				end,
-
-				openrouter_gemini_pro = function()
-					return require("codecompanion.adapters").extend("openai_compatible", {
-						env = {
-							url = "https://openrouter.ai/api",
-							api_key = "OPENROUTER_API_KEY",
-							chat_url = "/v1/chat/completions",
-						},
-						schema = {
-							model = {
-								default = "google/gemini-2.5-pro-preview-03-25",
-							},
-						},
-					})
-				end,
-
-				openrouter_gemini_flash = function()
-					return require("codecompanion.adapters").extend("openai_compatible", {
-						env = {
-							url = "https://openrouter.ai/api",
-							chat_url = "/v1/chat/completions",
-							api_key = function()
-								return os.getenv("OPENROUTER_API_KEY")
-							end,
-						},
-						schema = {
-							model = {
-								default = "google/gemini-2.5-flash-preview",
-							},
-						},
-					})
-				end,
-			},
-
-			opts = {
-				log_level = "DEBUG",
-			},
-		}
-	end,
-	init = function()
-		-- Keybindings
-		vim.keymap.set("n", "<leader>aa", "<cmd>CodeCompanionChat Toggle<CR>", { desc = " CodeCompanion: Toggle Chat" })
-		vim.keymap.set(
-			"v",
-			"<leader>aa",
-			"<cmd>CodeCompanionChat Add<CR>",
-			{ desc = " CodeCompanion: Add Select to Chat" }
-		)
-		vim.keymap.set("n", "<leader>an", "<cmd>CodeCompanionChat<CR>", { desc = " CodeCompanion: New Chat" })
-		vim.keymap.set("n", "<leader>ac", "<cmd>CodeCompanionChat<CR>", { desc = " CodeCompanion: Chat" })
-		vim.keymap.set("n", "<leader>aq", "<cmd>CodeCompanion<CR>", { desc = " CodeCompanion: Quick Action" })
-
-		-- Extend code companion commands
-	end,
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		"nvim-treesitter/nvim-treesitter",
-	},
-}
+-- return {
+-- 	"olimorris/codecompanion.nvim",
+-- 	opts = function()
+-- 		return {
+-- 			display = {
+-- 				chat = {
+-- 					show_references = true, -- Show references (from slash commands and variables) in the chat buffer?
+-- 					start_in_insert_mode = true, -- Open the chat buffer in insert mode?
+-- 					-- Change the default icons
+-- 					icons = {
+-- 						pinned_buffer = " ",
+-- 						watched_buffer = "👀 ",
+-- 					},
+--
+-- 					-- Alter the sizing of the debug window
+-- 					debug_window = {
+-- 						---@return number|fun(): number
+-- 						width = vim.o.columns - 5,
+-- 						---@return number|fun(): number
+-- 						height = vim.o.lines - 2,
+-- 					},
+--
+-- 					-- Options to customize the UI of the chat buffer
+-- 					window = {
+-- 						layout = "vertical", -- float|vertical|horizontal|buffer
+-- 						border = "single",
+-- 						height = 0.8,
+-- 						width = 0.45,
+-- 						relative = "editor",
+-- 						full_height = true, -- when set to false, vsplit will be used to open the chat buffer vs. botright/topleft vsplit
+-- 						opts = {
+-- 							breakindent = true,
+-- 							cursorcolumn = false,
+-- 							cursorline = false,
+-- 							foldcolumn = "0",
+-- 							linebreak = true,
+-- 							list = false,
+-- 							numberwidth = 1,
+-- 							signcolumn = "no",
+-- 							spell = false,
+-- 							wrap = true,
+-- 						},
+-- 					},
+--
+-- 					---Customize how tokens are displayed
+-- 					---@param tokens number
+-- 					---@return string
+-- 					token_count = function(tokens)
+-- 						return " (" .. tokens .. " tokens)"
+-- 					end,
+-- 				},
+--
+-- 				action_palette = {
+-- 					width = 95,
+-- 					height = 10,
+-- 					provider = "telescope", -- Can be "default", "telescope", or "mini_pick". If not specified, the plugin will autodetect installed providers.
+-- 					opts = {
+-- 						show_default_actions = true, -- Show the default actions in the action palette?
+-- 						show_default_prompt_library = true, -- Show the default prompt library in the action palette?
+-- 					},
+-- 				},
+-- 			},
+--
+-- 			strategies = {
+-- 				chat = {
+-- 					adapter = "openrouter_gemini_pro",
+-- 					roles = {
+-- 						user = "subaru",
+-- 						---@type string|fun(adapter: CodeCompanion.Adapter): string
+-- 						llm = function(adapter)
+-- 							return "AI (" .. adapter.formatted_name .. ")"
+-- 						end,
+-- 					},
+-- 				},
+--
+-- 				inline = {
+-- 					keymaps = {
+-- 						accept_change = {
+-- 							modes = { n = "ga" },
+-- 							description = "Accept the suggested change",
+-- 						},
+-- 						reject_change = {
+-- 							modes = { n = "gr" },
+-- 							description = "Reject the suggested change",
+-- 						},
+-- 					},
+-- 				},
+-- 			},
+--
+-- 			extensions = {
+-- 				history = {
+-- 					enabled = true,
+-- 					opts = {
+-- 						-- Keymap to open history from chat buffer (default: gh)
+-- 						keymap = "gh",
+-- 						-- Keymap to save the current chat manually (when auto_save is disabled)
+-- 						save_chat_keymap = "sc",
+-- 						-- Save all chats by default (disable to save only manually using 'sc')
+-- 						auto_save = true,
+-- 						-- Number of days after which chats are automatically deleted (0 to disable)
+-- 						expiration_days = 0,
+-- 						-- Picker interface (auto resolved to a valid picker)
+-- 						picker = "telescope", --- ("telescope", "snacks", "fzf-lua", or "default")
+-- 						-- Customize picker keymaps (optional)
+-- 						picker_keymaps = {
+-- 							rename = { n = "r", i = "<M-r>" },
+-- 							delete = { n = "d", i = "<M-d>" },
+-- 							duplicate = { n = "<C-y>", i = "<C-y>" },
+-- 						},
+-- 						---Automatically generate titles for new chats
+-- 						auto_generate_title = true,
+-- 						title_generation_opts = {
+-- 							---Adapter for generating titles (defaults to current chat adapter)
+-- 							adapter = nil, -- "copilot"
+-- 							---Model for generating titles (defaults to current chat model)
+-- 							model = nil, -- "gpt-4o"
+-- 							---Number of user prompts after which to refresh the title (0 to disable)
+-- 							refresh_every_n_prompts = 0, -- e.g., 3 to refresh after every 3rd user prompt
+-- 							---Maximum number of times to refresh the title (default: 3)
+-- 							max_refreshes = 3,
+-- 						},
+-- 						---On exiting and entering neovim, loads the last chat on opening chat
+-- 						continue_last_chat = false,
+-- 						---When chat is cleared with `gx` delete the chat from history
+-- 						delete_on_clearing_chat = false,
+-- 						---Directory path to save the chats
+-- 						dir_to_save = vim.fn.stdpath("data") .. "/codecompanion-history",
+-- 						---Enable detailed logging for history extension
+-- 						enable_logging = false,
+-- 						---Optional filter function to control which chats are shown when browsing
+-- 						chat_filter = nil, -- function(chat_data) return boolean end
+-- 					},
+-- 				},
+--
+-- 				mcphub = {
+-- 					callback = "mcphub.extensions.codecompanion",
+-- 					opts = {
+-- 						show_result_in_chat = true, -- Show mcp tool results in chat
+-- 						make_vars = true, -- Convert resources to #variables
+-- 						make_slash_commands = true, -- Add prompts as /slash commands
+-- 					},
+-- 				},
+--
+-- 				vectorcode = {
+-- 					enabled = true,
+-- 				},
+-- 			},
+--
+-- 			adapters = {
+-- 				openrouter_claude = function()
+-- 					return require("codecompanion.adapters").extend("openai_compatible", {
+-- 						env = {
+-- 							url = "https://openrouter.ai/api",
+-- 							api_key = "OPENROUTER_API_KEY",
+-- 							chat_url = "/v1/chat/completions",
+-- 						},
+-- 						schema = {
+-- 							model = {
+-- 								default = "anthropic/claude-4-sonnet",
+-- 							},
+-- 						},
+-- 					})
+-- 				end,
+--
+-- 				openrouter_gemini_pro = function()
+-- 					return require("codecompanion.adapters").extend("openai_compatible", {
+-- 						env = {
+-- 							url = "https://openrouter.ai/api",
+-- 							api_key = "OPENROUTER_API_KEY",
+-- 							chat_url = "/v1/chat/completions",
+-- 						},
+-- 						schema = {
+-- 							model = {
+-- 								default = "google/gemini-2.5-pro-preview-03-25",
+-- 							},
+-- 						},
+-- 					})
+-- 				end,
+--
+-- 				openrouter_gemini_flash = function()
+-- 					return require("codecompanion.adapters").extend("openai_compatible", {
+-- 						env = {
+-- 							url = "https://openrouter.ai/api",
+-- 							chat_url = "/v1/chat/completions",
+-- 							api_key = function()
+-- 								return os.getenv("OPENROUTER_API_KEY")
+-- 							end,
+-- 						},
+-- 						schema = {
+-- 							model = {
+-- 								default = "google/gemini-2.5-flash-preview",
+-- 							},
+-- 						},
+-- 					})
+-- 				end,
+-- 			},
+--
+-- 			opts = {
+-- 				log_level = "DEBUG",
+-- 			},
+-- 		}
+-- 	end,
+-- 	init = function()
+-- 		-- Keybindings
+-- 		vim.keymap.set("n", "<leader>aa", "<cmd>CodeCompanionChat Toggle<CR>", { desc = " CodeCompanion: Toggle Chat" })
+-- 		vim.keymap.set(
+-- 			"v",
+-- 			"<leader>aa",
+-- 			"<cmd>CodeCompanionChat Add<CR>",
+-- 			{ desc = " CodeCompanion: Add Select to Chat" }
+-- 		)
+-- 		vim.keymap.set("n", "<leader>an", "<cmd>CodeCompanionChat<CR>", { desc = " CodeCompanion: New Chat" })
+-- 		vim.keymap.set("n", "<leader>ac", "<cmd>CodeCompanionChat<CR>", { desc = " CodeCompanion: Chat" })
+-- 		vim.keymap.set("n", "<leader>aq", "<cmd>CodeCompanion<CR>", { desc = " CodeCompanion: Quick Action" })
+--
+-- 		-- Extend code companion commands
+-- 	end,
+-- 	dependencies = {
+-- 		"nvim-lua/plenary.nvim",
+-- 		"nvim-treesitter/nvim-treesitter",
+-- 		"ravitemer/codecompanion-history.nvim",
+-- 		"Davidyz/VectorCode",
+-- 	},
+-- }

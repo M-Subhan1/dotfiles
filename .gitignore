@@ -6,3 +6,6 @@
 .config/mcphub/
 .config/vectorcode/
 .config/stripe
+.config/nvim/Users
+configstore
+simple-update-notifier

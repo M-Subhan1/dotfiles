@@ -88,3 +88,14 @@ eval "$(direnv hook zsh)"
 
 # Created by `pipx` on 2025-01-19 18:00:36
 export PATH="$PATH:/Users/subhan/.local/bin"
+
+export SNAP_HAPPY_SCREENSHOT_PATH="~/Pictures/snaphappy"
+
+# Added by Windsurf
+export PATH="/Users/subhan/.codeium/windsurf/bin:$PATH"
+
+alias claude="/Users/subhan/.claude/local/claude"
+
+alias gtw="git-tmux-workspace"
+
+export PATH="$(go env GOPATH)/bin:$PATH"
