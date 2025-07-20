@@ -3,49 +3,7 @@ return {
 	dependencies = "nvim-tree/nvim-web-devicons",
 	cmd = { "NvimTreeToggle", "NvimTreeFocus" },
 	config = function()
-		local nvimtree = require("nvim-tree")
 		vim.cmd.highlight("link NvimTreeWinSeparator NvimTreeNormal")
-
-		nvimtree.setup({
-			disable_netrw = true,
-			view = {
-				width = 30,
-				relativenumber = true,
-				preserve_window_proportions = false,
-			},
-			-- change folder arrow icons
-			renderer = {
-				root_folder_label = false,
-				indent_markers = {
-					enable = true,
-				},
-				icons = {
-					glyphs = {
-						folder = {
-							arrow_closed = "", -- arrow when folder is closed
-							arrow_open = "", -- arrow when folder is open
-						},
-					},
-				},
-			},
-			-- disable window_picker for
-			-- explorer to work well with
-			-- window splits
-			actions = {
-				open_file = {
-					quit_on_open = true,
-					window_picker = {
-						enable = false,
-					},
-				},
-			},
-			filters = {
-				custom = { "node_modules/.*" },
-			},
-			git = {
-				ignore = false,
-			},
-		})
 
 		-- set keymaps
 		local keymap = vim.keymap -- for conciseness

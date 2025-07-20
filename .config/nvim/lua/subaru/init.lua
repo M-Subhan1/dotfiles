@@ -34,4 +34,55 @@ require("mini.move").setup({
 	},
 })
 
-require("nvim-tree").setup()
+require("mini.completion").setup({
+	mappings = {
+		scroll_down = "<C-j>",
+		scroll_up = "<C-k>",
+	},
+})
+
+require("mini.icons").setup()
+require("mini.snippets").setup({
+	snippets = { require("mini.snippets").gen_loader.from_lang() },
+})
+
+require("nvim-tree").setup({
+	disable_netrw = true,
+	view = {
+		width = 30,
+		relativenumber = true,
+		preserve_window_proportions = false,
+	},
+	-- change folder arrow icons
+	renderer = {
+		root_folder_label = false,
+		indent_markers = {
+			enable = true,
+		},
+		icons = {
+			glyphs = {
+				folder = {
+					arrow_closed = "", -- arrow when folder is closed
+					arrow_open = "", -- arrow when folder is open
+				},
+			},
+		},
+	},
+	-- disable window_picker for
+	-- explorer to work well with
+	-- window splits
+	actions = {
+		open_file = {
+			quit_on_open = true,
+			window_picker = {
+				enable = false,
+			},
+		},
+	},
+	filters = {
+		custom = { "node_modules/.*" },
+	},
+	git = {
+		ignore = false,
+	},
+})
