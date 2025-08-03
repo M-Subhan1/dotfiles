@@ -34,18 +34,7 @@ require("mini.move").setup({
 	},
 })
 
-require("mini.completion").setup({
-	mappings = {
-		scroll_down = "<C-j>",
-		scroll_up = "<C-k>",
-	},
-})
-
 require("mini.icons").setup()
-require("mini.snippets").setup({
-	snippets = { require("mini.snippets").gen_loader.from_lang() },
-})
-
 require("nvim-tree").setup({
 	disable_netrw = true,
 	view = {
