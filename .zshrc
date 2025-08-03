@@ -29,12 +29,12 @@ export EDITOR=/opt/homebrew/bin/nvim
 alias ls="eza --icons --git -a"
 alias ld="eza --tree --level=2 --icons --git"
 
-# fzf
-source <(fzf --zsh)
-
 # Others
 alias cl="clear"
 alias pn="pnpm"
+alias pb="pnpm run build"
+alias ps="pnpm start"
+
 alias cd="z"
 
 # Bind key to open a new session
@@ -75,6 +75,9 @@ zinit snippet OMZP::brew
 zinit snippet OMZP::direnv
 zinit snippet OMZP::fzf
 
+# fzf
+source <(fzf --zsh)
+
 # pnpm
 export PNPM_HOME="/Users/subhan/Library/pnpm"
 case ":$PATH:" in
@@ -88,13 +91,12 @@ eval "$(direnv hook zsh)"
 
 # Created by `pipx` on 2025-01-19 18:00:36
 export PATH="$PATH:/Users/subhan/.local/bin"
-
 export SNAP_HAPPY_SCREENSHOT_PATH="~/Pictures/snaphappy"
 
-# Added by Windsurf
-export PATH="/Users/subhan/.codeium/windsurf/bin:$PATH"
-
 alias claude="/Users/subhan/.claude/local/claude"
+alias clr="claude --resume" # Pick and resume session
+alias clc="claude --continue" # Continue last session
+alias cls="claude --dangerously-skip-permissions"
 
 alias gtw="git-tmux-workspace"
 
