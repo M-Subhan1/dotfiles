@@ -47,6 +47,10 @@ return {
 			nerd_font_variant = "mono",
 		},
 
+		enabled = function()
+			return vim.bo.filetype ~= "minifiles"
+		end,
+
 		-- (Default) Only show the documentation popup when manually triggered
 		completion = {
 			documentation = { auto_show = false },
