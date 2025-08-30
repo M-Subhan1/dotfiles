@@ -11,9 +11,14 @@ return {
 	window_decorations = "RESIZE",
 	keys = {
 		{
-			key = "f",
+			key = "h",
 			mods = "CTRL",
-			action = wezterm.action.ToggleFullScreen,
+			action = wezterm.action.Multiple({
+				wezterm.action.SendKey({ key = "\\", mods = "CTRL" }),
+				wezterm.action.SendKey({ key = "n", mods = "CTRL" }),
+				-- Shortcut of <C-w><C-h>
+				wezterm.action.SendKey({ key = "h", mods = "CTRL" }),
+			}),
 		},
 	},
 	mouse_bindings = {
