@@ -4,6 +4,7 @@ return {
 	build = ":TSUpdate",
 	dependencies = {
 		"windwp/nvim-ts-autotag",
+		"nvim-treesitter/nvim-treesitter-textobjects",
 	},
 	config = function()
 		-- import nvim-treesitter plugin
@@ -11,8 +12,20 @@ return {
 
 		-- configure treesitter
 		treesitter.setup({ -- enable syntax highlighting
+			auto_install = false,
+			sync_install = false,
+			ignore_install = {},
+			modules = {},
 			highlight = {
 				enable = true,
+				-- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
+				disable = function(_, buf)
+					local max_filesize = 100 * 1024 -- 100 KB
+					local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+					if ok and stats and stats.size > max_filesize then
+						return true
+					end
+				end,
 			},
 			-- enable indentation
 			indent = { enable = true },
@@ -88,6 +101,12 @@ return {
 				"dockerfile",
 				"gitignore",
 				"c",
+				"python",
+				"go",
+				"gomod",
+				"gosum",
+				"gotmpl",
+				"rust",
 			},
 			incremental_selection = {
 				enable = true,

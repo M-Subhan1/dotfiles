@@ -1,7 +1,6 @@
 require("subaru.core")
 require("subaru.lazy")
 
-require("mini.ai").setup()
 require("mini.comment").setup()
 require("mini.surround").setup()
 require("mini.bracketed").setup()

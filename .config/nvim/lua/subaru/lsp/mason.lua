@@ -41,6 +41,7 @@ return {
 				"mdx_analyzer",
 				"yamlls",
 				"prismals",
+				"rust_analyzer",
 			},
 		})
 

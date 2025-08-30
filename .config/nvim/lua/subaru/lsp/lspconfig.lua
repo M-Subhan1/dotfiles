@@ -51,6 +51,15 @@ return {
 			end,
 		})
 
+		-- For `rust-analyzer`
+		vim.lsp.config("rust-analyzer", {
+			completion = {
+				callable = {
+					snippets = "add_parenthesis",
+				},
+			},
+		})
+
 		vim.lsp.config("emmet_ls", {
 			filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
 		})
