@@ -1,32 +1,488 @@
 {
-    "global": { "show_in_menu_bar": false },
-    "profiles": [
-        {
-            "complex_modifications": {
-                "rules": [
-                    {
-                        "manipulators": [
-                            {
-                                "description": "Change caps_lock to command+control+option+shift.",
-                                "from": {
-                                    "key_code": "caps_lock",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "left_shift",
-                                        "modifiers": ["left_command", "left_control", "left_option"]
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
+  "profiles": [
+    {
+      "complex_modifications": {
+        "parameters": {
+          "basic.to_delayed_action_delay_milliseconds": 200,
+          "basic.to_if_held_down_threshold_milliseconds": 200
+        },
+        "rules": [
+          {
+            "description": "Programming Layer - Right Command + Ergonomic Backspace",
+            "manipulators": [
+              {
+                "description": "Right Command Layer Trigger",
+                "from": {
+                  "key_code": "right_command",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "programming_layer",
+                      "value": 1
                     }
-                ]
-            },
-            "name": "Default profile",
-            "selected": true,
-            "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
-        }
-    ]
+                  }
+                ],
+                "to_after_key_up": [
+                  {
+                    "set_variable": {
+                      "name": "programming_layer",
+                      "value": 0
+                    }
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "description": "Ergonomic Backspace: Right Cmd + Space",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "spacebar",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "delete_or_backspace" }],
+                "type": "basic"
+              },
+              {
+                "description": "Alternative Backspace: Caps + H (vim style)",
+                "from": {
+                  "key_code": "h",
+                  "modifiers": {
+                    "mandatory": [
+                      "left_command",
+                      "left_control",
+                      "left_option",
+                      "left_shift"
+                    ],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [{ "key_code": "delete_or_backspace" }],
+                "type": "basic"
+              },
+              {
+                "description": "Index finger: f -> { (most common)",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "f",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "open_bracket", "modifiers": ["shift"] }],
+                "type": "basic"
+              },
+              {
+                "description": "Index finger: j -> } (most common)",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "j",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "close_bracket", "modifiers": ["shift"] }],
+                "type": "basic"
+              },
+              {
+                "description": "Middle finger: d -> ( (very common)",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "d",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "9", "modifiers": ["shift"] }],
+                "type": "basic"
+              },
+              {
+                "description": "Middle finger: k -> ) (very common)",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "k",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "0", "modifiers": ["shift"] }],
+                "type": "basic"
+              },
+              {
+                "description": "Ring finger: s -> [ (common)",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "s",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "open_bracket" }],
+                "type": "basic"
+              },
+              {
+                "description": "Ring finger: l -> ] (common)",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "l",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "close_bracket" }],
+                "type": "basic"
+              },
+              {
+                "description": "Pinky: a -> = (assignment)",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "a",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "equal_sign" }],
+                "type": "basic"
+              },
+              {
+                "description": "Pinky: ; -> + (operators)",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "semicolon",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "equal_sign", "modifiers": ["shift"] }],
+                "type": "basic"
+              },
+              {
+                "description": "Weak fingers: g -> _ (underscore)",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "g",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "hyphen", "modifiers": ["shift"] }],
+                "type": "basic"
+              },
+              {
+                "description": "Weak fingers: h -> - (hyphen)",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "h",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "hyphen" }],
+                "type": "basic"
+              },
+              {
+                "description": "Index fingers: r -> ' (quotes)",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "r",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "quote" }],
+                "type": "basic"
+              },
+              {
+                "description": "Index fingers: u -> \" (double quotes)",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "u",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "quote", "modifiers": ["shift"] }],
+                "type": "basic"
+              },
+              {
+                "description": "Middle fingers: e -> ! (exclamation)",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "e",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "1", "modifiers": ["shift"] }],
+                "type": "basic"
+              },
+              {
+                "description": "Middle fingers: i -> : (colon)",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "i",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "semicolon", "modifiers": ["shift"] }],
+                "type": "basic"
+              },
+              {
+                "description": "Ring fingers: w -> | (pipe)",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "w",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "backslash", "modifiers": ["shift"] }],
+                "type": "basic"
+              },
+              {
+                "description": "Ring fingers: o -> & (ampersand)",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "o",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "7", "modifiers": ["shift"] }],
+                "type": "basic"
+              },
+              {
+                "description": "Additional: t -> / (slash)",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "t",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "slash" }],
+                "type": "basic"
+              },
+              {
+                "description": "Additional: y -> \\ (backslash)",
+                "conditions": [
+                  {
+                    "name": "programming_layer",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "y",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "backslash" }],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "manipulators": [
+              {
+                "description": "Change caps_lock to command+control+option+shift.",
+                "from": {
+                  "key_code": "caps_lock",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [
+                  {
+                    "key_code": "left_shift",
+                    "modifiers": ["left_command", "left_control", "left_option"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Double tap any shift to toggle caps lock",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "name": "shift pressed",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "left_shift",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "caps_lock" }],
+                "type": "basic"
+              },
+              {
+                "conditions": [
+                  {
+                    "name": "shift pressed",
+                    "type": "variable_if",
+                    "value": 1
+                  }
+                ],
+                "from": {
+                  "key_code": "right_shift",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "caps_lock" }],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "left_shift",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "shift pressed",
+                      "value": 1
+                    }
+                  },
+                  { "key_code": "left_shift" }
+                ],
+                "to_delayed_action": {
+                  "to_if_canceled": [
+                    {
+                      "set_variable": {
+                        "name": "shift pressed",
+                        "value": 0
+                      }
+                    }
+                  ],
+                  "to_if_invoked": [
+                    {
+                      "set_variable": {
+                        "name": "shift pressed",
+                        "value": 0
+                      }
+                    }
+                  ]
+                },
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "right_shift",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "shift pressed",
+                      "value": 1
+                    }
+                  },
+                  { "key_code": "right_shift" }
+                ],
+                "to_delayed_action": {
+                  "to_if_canceled": [
+                    {
+                      "set_variable": {
+                        "name": "shift pressed",
+                        "value": 0
+                      }
+                    }
+                  ],
+                  "to_if_invoked": [
+                    {
+                      "set_variable": {
+                        "name": "shift pressed",
+                        "value": 0
+                      }
+                    }
+                  ]
+                },
+                "type": "basic"
+              }
+            ]
+          }
+        ]
+      },
+      "name": "Default profile",
+      "selected": true,
+      "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
+    }
+  ]
 }
