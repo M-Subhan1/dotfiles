@@ -1,0 +1,33 @@
+;; defsrc is still necessary
+(defcfg
+  process-unmapped-keys yes
+)
+
+(defsrc
+  caps a s d f j k l ;
+)
+
+(defvar
+  tap-time 100
+  hold-time 150
+)
+
+(defalias
+  ;; Map hyper key / esc to caps
+  hyper (multi alt ctl met sft)
+  esc-hyper (tap-hold 100 100 esc @hyper)
+
+  ;; Home row mods
+  a (tap-hold $tap-time $hold-time a lctl)
+  s (tap-hold $tap-time $hold-time s lalt)
+  d (tap-hold $tap-time $hold-time d lsft)
+  f (tap-hold $tap-time $hold-time f lmet)
+  j (tap-hold $tap-time $hold-time j rmet)
+  k (tap-hold $tap-time $hold-time k rsft)
+  l (tap-hold $tap-time $hold-time l ralt)
+  ; (tap-hold $tap-time $hold-time ; rctl)
+)
+
+(deflayer base
+  @esc-hyper @a @s @d @f @j @k @l @;
+)
