@@ -1,9 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
-LABEL="local.skif-wifi-login"
-SRC="$(cd "$(dirname "$0")" && pwd)/skif-wifi-login.sh"
-BIN="$HOME/.local/bin/skif-wifi-login.sh"
+NAME="skif-tim-g9-wifi-login"
+LABEL="local.$NAME"
+SRC="$(cd "$(dirname "$0")" && pwd)/$NAME.sh"
+BIN="$HOME/.local/bin/$NAME.sh"
 PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
 
 mkdir -p "$HOME/.local/bin" "$HOME/Library/LaunchAgents" "$HOME/Library/Logs"
@@ -28,11 +29,11 @@ cat > "$PLIST" <<PLIST
     <key>ProcessType</key>
     <string>Background</string>
     <key>StandardErrorPath</key>
-    <string>$HOME/Library/Logs/skif-wifi-login.err</string>
+    <string>$HOME/Library/Logs/$NAME.err</string>
 </dict>
 </plist>
 PLIST
 
 launchctl bootout "gui/$(id -u)" "$PLIST" 2>/dev/null || true
 launchctl bootstrap "gui/$(id -u)" "$PLIST"
-echo "Installed. Log: ~/Library/Logs/skif-wifi-login.log"
+echo "Installed. Log: ~/Library/Logs/$NAME.log"

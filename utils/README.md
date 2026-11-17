@@ -4,4 +4,4 @@ Small standalone tools. Each folder is self-contained and has its own README and
 
 | Util | What it does |
 |---|---|
-| [skif-wifi-login](skif-wifi-login/) | Stops the SKIF guest Wi-Fi from logging you out every hour (macOS) |
+| [skif-tim-g9-wifi-login](skif-tim-g9-wifi-login/) | Stops the SKIF guest Wi-Fi at Tim Hortons G-9 from logging you out every hour (macOS) |
